@@ -1,0 +1,40 @@
+
+{
+    "conference" : {
+        "_source" : {"excludes" : ["file"]},
+        "properties" : {
+            "titre": {
+                "type":"multi_field",
+                "fields": {
+                    "autocomplete_bidirectionnel": {
+                        "type": "string",
+                        "analyzer" : "analyzer_basic_autocomplete_bidirectionnel"
+                    },
+                    "titre": {
+                        "type":"string"
+                    },
+                    "original":{
+                        "type": "string",
+                        "analyzer" : "keyword"
+                    }
+                }
+            },
+            "salle": {
+                "type": "multi_field",
+                "fields": {
+                    "salle": {
+                        "type": "string"
+                    },
+                    "original":{
+                        "type": "string",
+                        "analyzer" : "keyword"
+                    }
+                }
+            },
+            "file": {
+                "type":"attachment",
+                "store":"yes"
+            }
+        }
+    }
+}

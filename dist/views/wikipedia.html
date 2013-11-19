@@ -1,0 +1,28 @@
+<div>
+    <p>
+    <input type="checkbox" ng-model="highlight"> Highlight
+    </p>
+    <input type="text" ng-model="query_string" placeholder="Recherche...">
+    <span ng-repeat="term_suggest in results.suggest.suggest">
+        <span ng-repeat="suggest in term_suggest.options">
+            <span class="badge" ng-click="use_suggest(suggest.text)">{{suggest.text}}</span>
+        </span>
+    </span> 
+    <p>{{results.hits.total}} résultat(s) en {{results.took}} ms</p>
+    <div class="container-fluid">
+        <div class="row-fluid">
+                <table class="table">
+                    <tr>
+                        <th>Titre</th>
+                        <th ng-hide="highlight">Contenu</th>
+                        <th ng-hide="!highlight">Highlight</th>
+                    </tr>
+                    <tr ng-repeat="result in results.hits.hits">
+                        <td>{{result._source.title}}</td>
+                        <td ng-hide="highlight">{{result._source.text}}</td>
+                        <td ng-hide="!highlight"><p class="highlight" ng-repeat="highlight in result.highlight.text" ng-bind-html="highlight"></p></td>
+                    </tr>
+                </table>
+        </div>
+    </div>
+</div>

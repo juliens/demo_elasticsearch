@@ -1,0 +1,35 @@
+<div>
+    <p><label><input type="checkbox" ng-model="ngram" /> NGram sur le titre</label></p>
+    <input type="text" ng-model="query_string" placeholder="Recherche..." />
+    <span ng-repeat="term_suggest in results.suggest.suggest">
+        <span ng-repeat="suggest in term_suggest.options">
+            <span class="badge" ng-click="use_suggest(suggest.text)">{{suggest.text}}</span>
+        </span>
+    </span> 
+    <p>{{results.hits.total}} résultat(s) en {{results.took}} ms</p>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span8">
+                <table class="table">
+                    <tr>
+                        <th>Titre</th>
+                        <th>Abstract</th>
+                        <th>Conférenciers</th>
+                        <th>Horaire</th>
+                        <th>Salle</th>
+                    </tr>
+                    <tr ng-repeat="result in results.hits.hits">
+                        <td>{{result.fields.titre}}</td>
+                        <td>{{result.fields.contenu}}</td>
+                        <td>{{result.fields.conferenciers|json}}</td>
+                        <td>{{result.fields.horaire}}</td>
+                        <td>{{result.fields.salle}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="span3">
+                <p ng-repeat="(key,facet) in facets" ng-click="switch_facet_filter(key)"><span  ng-class="{badge:true, 'badge-success':facet.filter}">{{facet.count}} {{facet.name}}</span> </p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,103 @@
+{
+    "index": {
+        "number_of_shards": 2,
+        "number_of_replicas": 0,
+        "analysis": {
+            "char_filter" : {
+                "alptis_char_filter" : {
+                    "type" : "mapping",
+                    "mappings" : ["iPad=> ipad ", "iPod=> ipod "]
+                }
+            },
+            "filter": {
+                "filtre_stop": {
+                    "type": "stop",
+                    "stopwords": ["_french_"],
+                    "ignore_case": true
+                },
+                "filtre_stemmer" : {
+                    "type" : "stemmer",
+                    "language" : "light_french"
+                },
+                "filtre_elision" : {
+                    "type" : "elision",
+                    "articles" : ["l", "m", "t", "qu", "n", "s", "j", "d"]
+                },
+                "filtre_synonymes" : {
+                    "type" : "synonym",
+                    "synonyms" : [
+                        "i-pad, i pad, iPad => ipad",
+                        "i-pod, i pod, iPod => ipod",
+                        "DA, Demande Adhésion",
+                        "Frontalier, Frontalié"
+                    ],
+                    "ignore_case" : true
+                },
+                "filtre_ngram" : {
+                    "type": "edgeNGram",
+                    "min_gram":2,
+                    "max_gram":10,
+                    "side" : "front"
+                },
+                "filtre_ngram_bidirectionnel" : {
+                    "type": "nGram",
+                    "min_gram":2,
+                    "max_gram":10
+                }
+            },
+            "analyzer": {
+                "analyzer_asciifolding_lowercase": {
+                    "type": "custom",
+                    "tokenizer": "keyword",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                },
+                "analyzer_tokenspace_asciifolding_lowercase": {
+                    "type": "custom",
+                    "tokenizer": "whitespace",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding"
+                    ]
+                },
+                "analyzer_alptis": {
+                    "type": "custom",
+                    "tokenizer": "standard",
+                    "char_filter" : ["alptis_char_filter"],
+                    "filter": [
+                        "filtre_elision",
+                        "filtre_synonymes",
+                        "filtre_stop",
+                        "word_delimiter",
+                        "lowercase",
+                        "filtre_stemmer",
+                        "asciifolding"
+                    ]
+                },
+                "analyzer_basic_autocomplete": {
+                    "type": "custom",
+                    "tokenizer": "keyword",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "word_delimiter",
+                        "filtre_ngram"
+                    ]
+                },
+                "analyzer_basic_autocomplete_bidirectionnel": {
+                    "type": "custom",
+                    "tokenizer": "keyword",
+                    "filter": [
+                        "lowercase",
+                        "asciifolding",
+                        "word_delimiter",
+                        "filtre_ngram_bidirectionnel"
+                    ]
+                }
+
+            }
+        }
+    }
+}

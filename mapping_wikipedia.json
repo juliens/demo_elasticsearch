@@ -1,0 +1,23 @@
+
+{
+    "page" : {
+        "properties" : {
+            "title": {
+                "type":"multi_field",
+                "fields": {
+                    "autocomplete_bidirectionnel": {
+                        "type": "string",
+                        "analyzer" : "analyzer_basic_autocomplete_bidirectionnel"
+                    },
+                    "title": {
+                        "type":"string"
+                    },
+                    "stemmer": {
+                        "type":"string",
+                        "analyzer":"analyzer_alptis"
+                    }                
+                }
+            }
+        }
+    }
+}
